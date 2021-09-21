@@ -15,7 +15,9 @@ Der GUC veranlasst ein Update basierend auf Informationen über die aktuelle Fir
 * **SDU Agent:** Für jedes Produkt ist ein Agent vorhanden und ermöglicht eine Statusabfrage der Firmware auf dem gegebenen Produkt und die eigentliche Installation eines Updates.
 
 ## 2 Schnittstelle GUC und Agent
-- [] Wie wird der Agent angesprochen, was muss übergeben werden? welche Hilfsmittel werden benötigt?
+Task Lists
+- [x] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported
+- [ ] Wie wird der Agent angesprochen, was muss übergeben werden? welche Hilfsmittel werden benötigt?
 
 Implmentierung für einen bestehenden SDU-GUC
 
