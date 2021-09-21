@@ -31,7 +31,7 @@ Wie wird der Agent angesprochen, was muss übergeben werden? welche Hilfsmittel 
   
 ## 4 Beispielagent für Sam R30
 Beschreiben anhand der Codeschnipsel was passiert
-
+	´´´bash
 	install_update () {
 		local VERSION=$1
 		local EXPECTED_SHA256=$2
@@ -58,3 +58,4 @@ Beschreiben anhand der Codeschnipsel was passiert
 		# end
 		echo -e "$(date -u) samr updated to $VERSION\n" >>/home/pi/sdu_guc_ssv/clients/sam-r30/sam-r30_fwUpdate_logfile.txt
 	}
+	´´´
