@@ -14,7 +14,7 @@ Der GUC veranlasst ein Update basierend auf Informationen über die aktuelle Fir
 
 * **SDU Agent:** Für jedes Produkt ist ein Agent vorhanden und ermöglicht eine Statusabfrage der Firmware auf dem gegebenen Produkt und die eigentliche Installation eines Updates.
 
-## 2 Schnittstelle GUC zu Agent als Implmentierung für einen bestehenden SDU-GUC
+## 2 Schnittstelle GUC zu Agent für einen bestehenden SDU-GUC
 
 ### Versionsabfrage
 * **Aufruf**: `/path/to/agent info`
@@ -28,17 +28,21 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
    - `[version]`: Versions-String des zu installierenden Updates. Der Agent kann hieran bereits entscheiden, ob das Update akzeptiert wird. Bspw. können darüber Downgrades verhindert werden, wenn die Firmware damit nicht umgehen kann.
    - `[sha256]`: Der SHA256-Hash des Updates. Der Agent muss prüfen, ob die empfangenen Daten tatsächlich diesen Hash bilden. Um einen vollständigen Download zum Prüfen des Hashes zu verhindern (bei großen Update ist das bspw. gar nicht möglich), wird die Prüf-Aufgabe nicht vom Gateway-Update-Client erledigt.
 
-## 3 Agent zu Mikrocontroller
+## 3 Schnittstelle Agent zu Mikrocontroller
 * [`edbg`](https://github.com/ataradov/edbg) Linux-Tool zum flashen des Sam R30 xplained pro
 
 ### Flashen einer neuen Firmware
 
 * **Aufruf**: `path/to/edbg [options]`
   - `[options]`: Verkettung von Target und [Optionen](https://github.com/ataradov/edbg#usage) zum bearbeiten des Chips und verarbeiten von .bin Dateien.
-
+ ```bash
+# flash *.bin to samr30 via edbg
+# ~/path/to/edbg -t $BOARD -p -f ~/path/to/*.bin to be installed or flashed
+/home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
+```
 ## 4 Beispielagent für Sam R30 xplained pro
-* [`info`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ddad8f38c7e45d46ba28ce03129cf805d65bd6ea/agent_dummy_sdu-agent-dummy.sh#L19) Die Funktion ist Produktunabhängig.
-* [`install`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ddad8f38c7e45d46ba28ce03129cf805d65bd6ea/agent_dummy_sdu-agent-dummy.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
+* [`info`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ddad8f38c7e45d46ba28ce03129cf805d65bd6ea/agent_samr30_sdu-agent-samr30.sh#L19) Die Funktion ist Produktunabhängig.
+* [`install`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ddad8f38c7e45d46ba28ce03129cf805d65bd6ea/agent_samr30_sdu-agent-samr30.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
 
 ```bash
 install_update () {
