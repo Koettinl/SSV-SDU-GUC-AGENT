@@ -41,8 +41,8 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
 /home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
 ```
 ## 4 Beispielagent für Sam R30 xplained pro
-* [`info`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ddad8f38c7e45d46ba28ce03129cf805d65bd6ea/agent_samr30_sdu-agent-samr30.sh#L19) Die Funktion ist Produktunabhängig.
-* [`install`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ddad8f38c7e45d46ba28ce03129cf805d65bd6ea/agent_samr30_sdu-agent-samr30.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
+* [`info`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ac9206d16fcf1140b74e22430586241556962984/agent_samr30_sdu-agent-samr30.sh#L19) Die Funktion ist Produktunabhängig.
+* [`install`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ac9206d16fcf1140b74e22430586241556962984/agent_samr30_sdu-agent-samr30.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
 
 ```bash
 install_update () {
