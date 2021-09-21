@@ -49,9 +49,9 @@ install_update () {
 	# flash *.bin to samr30 via edbg
 	# ~/path/to/edbg -t <BOARD> -p -f ~/path/to/*.bin to be installed or flashed
 	# /home/pi/ instead of ~ for systemd to be able to find path
-	# in this case an example Hello World is used
 	/home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
-	# end
+	
+	# write logfile
 	echo -e "$(date -u) samr updated to $VERSION\n" >>/home/pi/sdu_guc_ssv/clients/sam-r30/sam-r30_fwUpdate_logfile.txt
 }
 
