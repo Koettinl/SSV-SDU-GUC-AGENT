@@ -3,7 +3,9 @@ How to set up an agent for a given SDU-GUC
 
 ## 1 Achitektur
 **- SDU Server:** Ein Secure Device Update (SDU) Server stellt Firmwareupdates zur verfügung.
+
 **- Client:** Ein Gateway Update Client verwaltet einzelne Agenten und die Kommunikation zum SDU Server.
+
 **- SDU Agent:** Für jedes Produkt ist ein Agent vorhanden und ermöglicht eine Statusabfrage der Firmware auf dem gegebenen Produkt und die eigentliche Installation eines Updates.
 
 ![Architektur Guc](https://user-images.githubusercontent.com/59482387/132204706-ce3661f2-0328-4731-bce8-013f67b2ba7d.PNG)
