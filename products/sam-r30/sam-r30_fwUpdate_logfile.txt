@@ -1,9 +1,0 @@
-Di 22. Jun 16:23:41 UTC 2021 samr updated to fwLedRed
-
-Di 22. Jun 16:23:41 UTC 2021 1 Set update to fwLedGreen
-Di 22. Jun 16:24:57 UTC 2021 samr updated to fwLedGreen
-
-Di 22. Jun 16:24:57 UTC 2021 2 Set update to fwLedRed
-Di 22. Jun 16:25:58 UTC 2021 samr updated to fwLedRed
-
-Di 22. Jun 16:25:58 UTC 2021 1 Set update to fwLedGreen
