@@ -31,7 +31,7 @@ Wie wird der Agent angesprochen, was muss übergeben werden? welche Hilfsmittel 
   
 ## 4 Beispielagent für Sam R30
 Beschreiben anhand der Codeschnipsel was passiert
-Code link [GitHub]/Koettinl/SSV-SDU-GUC/blob/main/agent_dummy_sdu-agent-dummy.sh
+Code link [GitHub] /Koettinl/SSV-SDU-GUC/blob/main/agent_dummy_sdu-agent-dummy.sh
 
 `install_update () {
 	local VERSION=$1
