@@ -8,7 +8,7 @@
 set -eo pipefail
 shopt -s inherit_errexit
 
-PRODUCT="dummy"
+PRODUCT="samr30"
 FILENAME=$(basename -- $0)
 
 get_sha256 () {
