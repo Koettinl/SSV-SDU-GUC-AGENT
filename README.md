@@ -7,6 +7,7 @@ Der Code des GUC und des Agenten befinden sich auf einem Raspberry Pi und das Pr
 Der GUC veranlasst ein Update basierend auf Informationen über die aktuelle Firmware des Produkts. Das Update wird vom SDU Server bezogen und über den GUC zur Installation auf dem Produkt überprüft und bereitgestellt. Anschließend erfolgt die Installation der neuen Firmware anhand des Agenten auf dem angeschlossenen Produkt.
 
 ![Architektur Guc](https://user-images.githubusercontent.com/59482387/132204706-ce3661f2-0328-4731-bce8-013f67b2ba7d.PNG)
+[_WSEI-SDU-120121.pdf](https://github.com/Koettinl/SSV-SDU-GUC/files/7202427/_WSEI-SDU-120121.pdf)
 
 * **SDU Server:** Ein Secure Device Update Server (SDU Server) stellt Firmwareupdates zur verfügung.
 
@@ -29,8 +30,9 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
    - `[version]`: Versions-String des zu installierenden Updates. Der Agent kann hieran bereits entscheiden, ob das Update akzeptiert wird. Bspw. können darüber Downgrades verhindert werden, wenn die Firmware damit nicht umgehen kann.
    - `[sha256]`: Der SHA256-Hash des Updates. Der Agent muss prüfen, ob die empfangenen Daten tatsächlich diesen Hash bilden. Um einen vollständigen Download zum Prüfen des Hashes zu verhindern (bei großen Update ist das bspw. gar nicht möglich), wird die Prüf-Aufgabe nicht vom Gateway-Update-Client erledigt.
 
+## Programmstruktur
 
-## 3 Beispielagent für Sam R30
+## 4 Beispielagent für Sam R30
 * `info` Die Funktion ist Produktunabhängig.
 * `install` ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
 
