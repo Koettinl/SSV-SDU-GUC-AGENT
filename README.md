@@ -33,8 +33,8 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
 
 
 ## 3 Beispielagent für Sam R30
-`info` Die Funktion ist Produktunabhängig.
-`install` ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
+* `info` Die Funktion ist Produktunabhängig.
+* `install` ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
 
 ```bash
 install_update () {
