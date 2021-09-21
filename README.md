@@ -33,7 +33,9 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
 
 
 ## 3 Beispielagent für Sam R30
-info: Der Agent schaut lokal auf dem Raspberry Pi nach dem letzten update
+`info` Die Funktion ist Produktunabhängig.
+`install` ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
+
 ```bash
 install_update () {
 	local VERSION=$1
@@ -55,10 +57,8 @@ install_update () {
 
 	# flash *.bin to samr30 via edbg
 	# ~/path/to/edbg -t $BOARD -p -f ~/path/to/*.bin to be installed or flashed
-	# /home/pi/ instead of ~ for systemd to be able to find path
-	# in this case an example Hello World is used
 	/home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
-	# end
+	# write LogFile
 	echo -e "$(date -u) samr updated to $VERSION\n" >>/home/pi/sdu_guc_ssv/clients/sam-r30/sam-r30_fwUpdate_logfile.txt
 }
 ```
