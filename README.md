@@ -31,4 +31,32 @@ Wie wird der Agent angesprochen, was muss übergeben werden? welche Hilfsmittel 
   
 ## 4 Beispielagent für Sam R30
 Beschreiben anhand der Codeschnipsel was passiert
-Code link
+Code link [GitHub]/Koettinl/SSV-SDU-GUC/blob/main/agent_dummy_sdu-agent-dummy.sh
+
+`install_update () {
+	local VERSION=$1
+	local EXPECTED_SHA256=$2
+
+	# Store update in file
+	cat >$FILENAME-$VERSION
+
+	# Check SHA256
+	local SHA256
+	SHA256=$(get_sha256 $FILENAME-$VERSION)
+	[ "$EXPECTED_SHA256" != "$SHA256" ] && return 3
+
+	# Store current version
+	echo -n $VERSION >$FILENAME
+
+	# extract bin from .tar and return extracted filename
+	local UpdateFile=$(tar -xvf $FILENAME-$VERSION)
+
+	# flash *.bin to samr30 via edbg
+	# ~/path/to/edbg -t $BOARD -p -f ~/path/to/*.bin to be installed or flashed
+	# /home/pi/ instead of ~ for systemd to be able to find path
+	# in this case an example Hello World is used
+	/home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
+	# end
+	echo -e "$(date -u) samr updated to $VERSION\n" >>/home/pi/sdu_guc_ssv/clients/sam-r30/sam-r30_fwUpdate_logfile.txt
+}
+`
