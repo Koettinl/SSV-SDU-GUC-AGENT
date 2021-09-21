@@ -4,7 +4,7 @@ Tutorail für den Aufbau eines Agenten für ein gegebenes GUC-SDU
 ## 1 Achitektur
 Ein SDU Server stellt Firmwareupdates für einen GUC und dieser verwaltet zugehörige Agenten für die gewünschten Produkte.
 Der Code des GUC und des Agenten befinden sich auf einem [Raspberry Pi](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) und das Produkt liegt hier in Form eines [Sam R30](https://www.microchip.com/en-us/products/wireless-connectivity/sub-ghz/sam-r30Mikrocontrollers) vor.
-Der GUC veranlasst ein Update basierend auf Informationen über die aktuelle Firmware des Produktes. Das Update wird vom SDU Server bezogen und über den GUC zur Installation auf dem Produkt überprüft und bereitgestellt. Anschließend erfolgt die Installation der neuen Firmware anhand des Agenten auf dem angeschlossenen Produkt.
+Der GUC veranlasst zyklische Updates basierend auf Informationen über die aktuelle Firmware des Produktes. Dafür werden `systemd` funktionen genutzt. Das Update wird vom SDU Server bezogen und über den GUC zur Installation auf dem Produkt überprüft und bereitgestellt. Anschließend erfolgt die Installation der neuen Firmware anhand des Agenten auf dem angeschlossenen Produkt.
 
 ![Architektur Guc](https://user-images.githubusercontent.com/59482387/132204706-ce3661f2-0328-4731-bce8-013f67b2ba7d.PNG)
 
@@ -17,14 +17,14 @@ Der GUC veranlasst ein Update basierend auf Informationen über die aktuelle Fir
 ## 2 Schnittstelle GUC zu Agent für einen bestehenden SDU-GUC
 
 ### Versionsabfrage
-* **Aufruf**: `/path/to/agent info`
+* **Aufruf**: [`/path/to/agent info`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/clients/guc_sdu-update.sh#L117)
 Die Abfrage erlaubt dem SDU-Gateway-Update-Client herauszufinden, welches Produkt der Agent bedient, welche Version installiert ist und ggf. wo ein Abbild der aktuell installierten Version zu finden ist. Letzteres wird benötigt, um Updates per Differenzen zu komprimieren.
 
 ### Neue Version
 
 Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installieren. Dies wird passieren, wenn die Version, die der `info`-Befehl zurück liefert sich von der Version, die der SDU-Server vorsieht, unterscheidet.
 
-* **Aufruf**: `/path/to/agent install [version] [sha256]`
+* **Aufruf**: [`/path/to/agent install [version] [sha256]`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/clients/guc_sdu-update.sh#L145)
    - `[version]`: Versions-String des zu installierenden Updates. Der Agent kann hieran bereits entscheiden, ob das Update akzeptiert wird. Bspw. können darüber Downgrades verhindert werden, wenn die Firmware damit nicht umgehen kann.
    - `[sha256]`: Der SHA256-Hash des Updates. Der Agent muss prüfen, ob die empfangenen Daten tatsächlich diesen Hash bilden. Um einen vollständigen Download zum Prüfen des Hashes zu verhindern (bei großen Update ist das bspw. gar nicht möglich), wird die Prüf-Aufgabe nicht vom Gateway-Update-Client erledigt.
 
@@ -35,14 +35,15 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
 
 * **Aufruf**: `path/to/edbg [options]`
   - `[options]`: Verkettung von Target und [Optionen](https://github.com/ataradov/edbg#usage) zum bearbeiten des Chips und verarbeiten von .bin Dateien.
- ```bash
+```bash
 # flash *.bin to samr30 via edbg
-# ~/path/to/edbg -t $BOARD -p -f ~/path/to/*.bin to be installed or flashed
+# ~/path/to/edbg -t <BOARD> -p -f ~/path/to/*.bin to be installed or flashed
 /home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
 ```
 ## 4 Beispielagent für Sam R30 xplained pro
-* [`info`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ac9206d16fcf1140b74e22430586241556962984/agent_samr30_sdu-agent-samr30.sh#L19) Die Funktion ist Produktunabhängig.
-* [`install`](https://github.com/Koettinl/SSV-SDU-GUC/blob/ac9206d16fcf1140b74e22430586241556962984/agent_samr30_sdu-agent-samr30.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
+* [`info`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/agents/agent_samr30_sdu-agent-samr30.sh#L19) Die Funktion ist Produktunabhängig.
+* [`install`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/agents/agent_samr30_sdu-agent-samr30.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
+
 
 ```bash
 install_update () {
@@ -64,9 +65,10 @@ install_update () {
 	local UpdateFile=$(tar -xvf $FILENAME-$VERSION)
 
 	# flash *.bin to samr30 via edbg
-	# ~/path/to/edbg -t $BOARD -p -f ~/path/to/*.bin to be installed or flashed
+	# /home/pi/path/to/edbg -t <BOARD> -p -f /home/pi/path/to/*.bin to be installed or flashed
 	/home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
-	# write LogFile
+	
+	# write logfile
 	echo -e "$(date -u) samr updated to $VERSION\n" >>/home/pi/sdu_guc_ssv/clients/sam-r30/sam-r30_fwUpdate_logfile.txt
 }
 ```
