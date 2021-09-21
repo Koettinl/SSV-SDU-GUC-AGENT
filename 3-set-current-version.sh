@@ -12,7 +12,7 @@ fi
 BASEURL=https://ssvdev-sdu0.ssv-service.de/v2
 MAINTAINER=lko
 VERSION=$1
-PRODUCT=dummy
+PRODUCT=samr30
 ASSIGNMENT_ID=41d94bb5-651d-4dd8-9673-cb3ed361ba77
 
 PKIARGS="--cacert $filePath/ssv-server-pki.crt.pem --cert $filePath/$MAINTAINER.crt.pem --key $filePath/$MAINTAINER.key.pem"
