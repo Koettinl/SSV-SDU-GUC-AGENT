@@ -32,7 +32,8 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client herauszufinden, welches Produk
 
 Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installieren. Dies wird passieren, wenn die Version, die der `info`-Befehl zurück liefert sich von der Version, die der SDU-Server vorsieht, unterscheidet.
 
-* **Aufruf**: ```bash /path/to/agent install [version] [sha256]```
+* **Aufruf**: ```bash
+ /path/to/agent install [version] [sha256]```
    - `[version]`: Versions-String des zu installierenden Updates. Der Agent kann hieran bereits entscheiden, ob das Update akzeptiert wird. Bspw. können darüber Downgrades verhindert werden, wenn die Firmware damit nicht umgehen kann.
    - `[sha256]`: Der SHA256-Hash des Updates. Der Agent muss prüfen, ob die empfangenen Daten tatsächlich diesen Hash bilden. Um einen vollständigen Download zum Prüfen des Hashes zu verhindern (bei großen Update ist das bspw. gar nicht möglich), wird die Prüf-Aufgabe nicht vom Gateway-Update-Client erledigt.
 
