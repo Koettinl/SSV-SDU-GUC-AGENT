@@ -14,16 +14,11 @@ Der GUC veranlasst ein Update basierend auf Informationen über die aktuelle Fir
 
 * **SDU Agent:** Für jedes Produkt ist ein Agent vorhanden und ermöglicht eine Statusabfrage der Firmware auf dem gegebenen Produkt und die eigentliche Installation eines Updates.
 
-
-## 2 Agent implementieren
-Implmentierung für bestehenden SDU-GUC
-
-Für jedes neue Produkt wird ein individueller Agent benötigt, dazu hier eine Einführung 
-
-
-
-## 3 Schnittstelle GUC und Agent
+## 2 Schnittstelle GUC und Agent
 Wie wird der Agent angesprochen, was muss übergeben werden? welche Hilfsmittel werden benötigt?
+
+Implmentierung für einen bestehenden SDU-GUC
+
 ### Versionsabfrage
 * **Aufruf**: `/path/to/agent info`
 Die Abfrage erlaubt dem SDU-Gateway-Update-Client herauszufinden, welches Produkt der Agent bedient, welche Version installiert ist und ggf. wo ein Abbild der aktuell installierten Version zu finden ist. Letzteres wird benötigt, um Updates per Differenzen zu komprimieren.
@@ -37,7 +32,7 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
    - `[sha256]`: Der SHA256-Hash des Updates. Der Agent muss prüfen, ob die empfangenen Daten tatsächlich diesen Hash bilden. Um einen vollständigen Download zum Prüfen des Hashes zu verhindern (bei großen Update ist das bspw. gar nicht möglich), wird die Prüf-Aufgabe nicht vom Gateway-Update-Client erledigt.
 
 
-## 4 Beispielagent für Sam R30
+## 3 Beispielagent für Sam R30
 info: Der Agent schaut lokal auf dem Raspberry Pi nach dem letzten update
 ```bash
 install_update () {
