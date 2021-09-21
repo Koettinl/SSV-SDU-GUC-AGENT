@@ -47,8 +47,7 @@ install_update () {
 	local UpdateFile=$(tar -xvf $FILENAME-$VERSION)
 
 	# flash *.bin to samr30 via edbg
-	# ~/path/to/edbg -t <BOARD> -p -f ~/path/to/*.bin to be installed or flashed
-	# /home/pi/ instead of ~ for systemd to be able to find path
+	# /home/pi/path/to/edbg -t <BOARD> -p -f /home/pi/path/to/*.bin to be installed or flashed
 	/home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
 	
 	# write logfile
