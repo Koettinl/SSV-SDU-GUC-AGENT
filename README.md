@@ -24,13 +24,17 @@ Für jedes neue Produkt wird ein individueller Agent benötigt, dazu hier eine E
 
 ## 3 Schnittstelle GUC und Agent
 Wie wird der Agent angesprochen, was muss übergeben werden? welche Hilfsmittel werden benötigt?
+### Versionsabfrage
+* **Aufruf**: `/path/to/agent info`
+Die Abfrage erlaubt dem SDU-Gateway-Update-Client herauszufinden, welches Produkt der Agent bedient, welche Version installiert ist und ggf. wo ein Abbild der aktuell installierten Version zu finden ist. Letzteres wird benötigt, um Updates per Differenzen zu komprimieren.
 
+### Neue Version
 * **Aufruf**: `/path/to/agent install [version] [sha256]`
    - `[version]`: Versions-String des zu installierenden Updates. Der Agent kann hieran bereits entscheiden, ob das Update akzeptiert wird. Bspw. können darüber Downgrades verhindert werden, wenn die Firmware damit nicht umgehen kann.
    - `[sha256]`: Der SHA256-Hash des Updates. Der Agent muss prüfen, ob die empfangenen Daten tatsächlich diesen Hash bilden. Um einen vollständigen Download zum Prüfen des Hashes zu verhindern (bei großen Update ist das bspw. gar nicht möglich), wird die Prüf-Aufgabe nicht vom Gateway-Update-Client erledigt.
   
 ## 4 Beispielagent für Sam R30
-Beschreiben anhand der Codeschnipsel was passiert
+info: Der Agent schaut lokal auf dem Raspberry Pi nach dem letzten update
 ```bash
 install_update () {
 	local VERSION=$1
