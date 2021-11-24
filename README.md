@@ -3,8 +3,15 @@ Tutorail für den Aufbau eines Agenten für ein gegebenes GUC-SDU
 
 ## 1 Achitektur
 Ein SDU Server stellt Firmwareupdates für einen GUC und dieser verwaltet zugehörige Agenten für die gewünschten Produkte.
-Der Code des GUC und des Agenten befinden sich auf einem [Raspberry Pi](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) und das Produkt liegt hier in Form eines [Sam R30](http://ww1.microchip.com/downloads/en/devicedoc/50002612a.pdf) vor.
+Der Code des GUC und des Agenten befinden sich auf einem [Raspberry Pi 4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) und das Produkt liegt hier in Form eines [Sam R30](http://ww1.microchip.com/downloads/en/devicedoc/50002612a.pdf) vor.
 Der GUC veranlasst zyklische Updates basierend auf Informationen über die aktuelle Firmware des Produktes. Dafür werden `systemd` funktionen genutzt. Das Update wird vom SDU Server bezogen und über den GUC zur Installation auf dem Produkt überprüft und bereitgestellt. Anschließend erfolgt die Installation der neuen Firmware anhand des Agenten auf dem angeschlossenen Produkt.
+
+### 1.1 Hardware Beispiel
+Für das beigefügte Beispiel wird der SAMR30 mit Jumperkabeln über die Pins PA06/07 an die Pins 23/24 des Rapsberry Pi angeschlossen. Des weiteren ist der Raspberry Pi mit dem EDBG-USB des SAMR30 zu verbinden.
+
+### 1.2 Software Beispiel
+Zur Installation auf einem Raspberry Pi mit Raspbian OS ist lediglich das Kopieren der Dateien mit gegebener Ordnerstruktur notwendig. Zur Ausführung eines Updates wird das [`sdu-guc-update.sh`](https://github.com/Koettinl/SSV-SDU-GUC-AGENT/blob/main/clients/guc_sdu-update.sh) Skript ausgeführt.
+Bei bedarf kann über Systemd ein zyklischer Aufruf realisiert werden.
 
 ![Architektur Guc](https://user-images.githubusercontent.com/59482387/132204706-ce3661f2-0328-4731-bce8-013f67b2ba7d.PNG)
 
@@ -14,6 +21,7 @@ Der GUC veranlasst zyklische Updates basierend auf Informationen über die aktue
 
 * **SDU Agent:** Für jedes Produkt ist ein Agent vorhanden und ermöglicht eine Statusabfrage der Firmware auf dem gegebenen Produkt und die eigentliche Installation eines Updates.
 
+
 ## 2 Schnittstelle GUC zu Agent für einen bestehenden SDU-GUC
 
 ### Versionsabfrage
@@ -22,7 +30,7 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client herauszufinden, welches Produk
 
 ### Neue Version
 
-Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installieren. Dies wird passieren, wenn die Version, die der `info`-Befehl zurück liefert sich von der Version, die der SDU-Server vorsieht, unterscheidet.
+Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installieren, wenn sich die Version, die der `info`-Befehl zurück liefert von der Version, die der SDU-Server vorsieht, unterscheidet.
 
 * **Aufruf**: [`/path/to/agent install [version] [sha256]`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/clients/guc_sdu-update.sh#L145)
    - `[version]`: Versions-String des zu installierenden Updates. Der Agent kann hieran bereits entscheiden, ob das Update akzeptiert wird. Bspw. können darüber Downgrades verhindert werden, wenn die Firmware damit nicht umgehen kann.
@@ -42,7 +50,7 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
 ```
 ## 4 Beispielagent für Sam R30 xplained pro
 * [`info`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/agents/agent_samr30_sdu-agent-samr30.sh#L19) Die Funktion ist Produktunabhängig.
-* [`install`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/agents/agent_samr30_sdu-agent-samr30.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird über die .tar entpackt und über edbg mit dem Mikrocontroller kommuniziert. Im Code werden Pfade explizit angegeben, damit systemd Aufrufe fehlerfrei möglich sind.
+* [`install`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/agents/agent_samr30_sdu-agent-samr30.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird das Update, das im .tar Format vorliegt, entpackt und über edbg der Mikrocontroller geflasht. Im Code werden Pfade explizit angegeben, damit systemd-Aufrufe fehlerfrei möglich sind.
 
 
 ```bash
