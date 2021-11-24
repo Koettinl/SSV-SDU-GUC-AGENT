@@ -7,8 +7,8 @@
 # - lines without "&&", "||", "while", "until", "!" (and maybe more?)
 set -eo pipefail
 shopt -s inherit_errexit
-
-PRODUCT="samr30"
+# product in Git heißt samr30
+PRODUCT="dummy"
 FILENAME=$(basename -- $0)
 
 get_sha256 () {
@@ -47,10 +47,11 @@ install_update () {
 	local UpdateFile=$(tar -xvf $FILENAME-$VERSION)
 
 	# flash *.bin to samr30 via edbg
-	# /home/pi/path/to/edbg -t $BOARD -p -f /home/pi/path/to/*.bin to be installed or flashed
+	# ~/path/to/edbg -t $BOARD -p -f ~/path/to/*.bin to be installed or flashed
+	# /home/pi/ instead of ~ for systemd to be able to find path
+	# in this case an example Hello World is used
 	/home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
-	
-	# write logfile
+	# end
 	echo -e "$(date -u) samr updated to $VERSION\n" >>/home/pi/sdu_guc_ssv/clients/sam-r30/sam-r30_fwUpdate_logfile.txt
 }
 

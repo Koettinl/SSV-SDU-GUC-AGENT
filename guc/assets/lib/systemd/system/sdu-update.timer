@@ -1,0 +1,11 @@
+[Unit]
+Description=Check SDU server for new updates
+
+[Timer]
+#OnCalendar=*-*-* 04:00:00
+OnCalendar=minutely
+RandomizedDelaySec=60
+
+[Install]
+WantedBy=basic.target
+

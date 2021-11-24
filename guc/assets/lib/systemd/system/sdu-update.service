@@ -1,0 +1,8 @@
+[Unit]
+Description=SDU system update
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/pi/sdu_guc_ssv/update.sh
