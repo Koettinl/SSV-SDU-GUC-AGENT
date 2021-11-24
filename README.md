@@ -3,7 +3,7 @@ Tutorail für den Aufbau eines Agenten für ein gegebenes GUC-SDU
 
 ## 1 Achitektur
 Ein SDU Server stellt Firmwareupdates für einen GUC und dieser verwaltet zugehörige Agenten für die gewünschten Produkte.
-Der Code des GUC und des Agenten befinden sich auf einem [Raspberry Pi](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) und das Produkt liegt hier in Form eines [Sam R30](https://www.microchip.com/en-us/products/wireless-connectivity/sub-ghz/sam-r30Mikrocontrollers) vor.
+Der Code des GUC und des Agenten befinden sich auf einem [Raspberry Pi](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) und das Produkt liegt hier in Form eines [Sam R30](http://ww1.microchip.com/downloads/en/devicedoc/50002612a.pdf) vor.
 Der GUC veranlasst zyklische Updates basierend auf Informationen über die aktuelle Firmware des Produktes. Dafür werden `systemd` funktionen genutzt. Das Update wird vom SDU Server bezogen und über den GUC zur Installation auf dem Produkt überprüft und bereitgestellt. Anschließend erfolgt die Installation der neuen Firmware anhand des Agenten auf dem angeschlossenen Produkt.
 
 ![Architektur Guc](https://user-images.githubusercontent.com/59482387/132204706-ce3661f2-0328-4731-bce8-013f67b2ba7d.PNG)
