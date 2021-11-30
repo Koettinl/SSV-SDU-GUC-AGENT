@@ -19,7 +19,7 @@ Für das beigefügte Beispiel wird der SAMR30 mit Jumperkabeln über die Pins PA
 Im [`Ordner`](https://github.com/Koettinl/SSV-SDU-GUC-AGENT/tree/as-sdu-v2/agent/samr30/assets/examples/sam-r30/bin) befinden sich zwei .bin Dateien als Firmware zum Test eines Updatezyklus. Jede Firmware lässt jeweils eine andere LED leuchten, sodass optisch geprüft werden kann, ob ein Update erfolgreich abgeschlossen wurde.
 
 ### **1.2 Software Beispiel**
-Dieses Softwarebeispiel funktioniert auf einem Raspberry Pi mit Raspian os und dem default Benutzer *Pi*. Wenn ein anderer Benutzer verwendet wird, müssen alle `$FILEPATH` mit dem entsprechenden Benutzer angepasst werden.
+Dieses Softwarebeispiel funktioniert auf einem Raspberry Pi mit Raspian os und dem default Benutzer *Pi*. Wenn ein anderer Benutzer verwendet wird, müssen alle `$FILEPATH` mit dem entsprechenden Benutzer angepasst werden. Das gilt auch für die Funktion [`install_update`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/agents/agent_samr30_sdu-agent-samr30.sh#L31).
 Bei Bedarf kann über Systemd ein zyklischer Aufruf realisiert werden.
 
 ### **1.2.1 Install**
@@ -121,7 +121,7 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
 ```
 ## 4 Beispielagent für Sam R30 xplained pro
 * [`info`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/agents/agent_samr30_sdu-agent-samr30.sh#L19) Die Funktion ist Produktunabhängig.
-* [`install`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/agents/agent_samr30_sdu-agent-samr30.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird das Update, das im .tar Format vorliegt, entpackt und über edbg der Mikrocontroller geflasht. Im Code werden Pfade explizit angegeben, damit systemd-Aufrufe fehlerfrei möglich sind.
+* [`install_update`](https://github.com/Koettinl/SSV-SDU-GUC/blob/eb0e3c7d2ba375e34df7808e4a0e9e3be56c72bb/agents/agent_samr30_sdu-agent-samr30.sh#L31) ist für jedes neue Produkt zu modifizieren. Hier wird das Update, das im .tar Format vorliegt, entpackt und über edbg der Mikrocontroller geflasht. Im Code werden Pfade explizit angegeben, damit systemd-Aufrufe fehlerfrei möglich sind.
 
 
 ```bash
