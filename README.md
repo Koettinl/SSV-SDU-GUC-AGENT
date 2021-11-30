@@ -11,7 +11,7 @@ Für das beigefügte Beispiel wird der SAMR30 mit Jumperkabeln über die Pins PA
 
 ### 1.2 Software Beispiel
 Zur Installation auf einem Raspberry Pi mit Raspbian OS ist lediglich das Kopieren der Dateien mit gegebener Ordnerstruktur notwendig. Zur Ausführung eines Updates wird das [`sdu-guc-update.sh`](https://github.com/Koettinl/SSV-SDU-GUC-AGENT/blob/main/clients/guc_sdu-update.sh) Skript ausgeführt.
-Bei bedarf kann über Systemd ein zyklischer Aufruf realisiert werden.
+Bei bedarf kann über Systemd ein zyklischer Aufruf realisiert werden. WIchtig: Dateipfade sind hardcoded und müssen ggf. in den einzelnen Skripten überprüft werden.
 
 ![Architektur Guc](https://user-images.githubusercontent.com/59482387/132204706-ce3661f2-0328-4731-bce8-013f67b2ba7d.PNG)
 
