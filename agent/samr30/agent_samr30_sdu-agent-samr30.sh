@@ -10,6 +10,7 @@ shopt -s inherit_errexit
 # product in Git heißt samr30
 PRODUCT="dummy"
 FILENAME=$(basename -- $0)
+FILEPATH=/home/pi/SSV-SDU-GUC-AGENT
 
 get_sha256 () {
 	local FILE=$1
@@ -52,7 +53,7 @@ install_update () {
 	# in this case an example Hello World is used
 	/home/pi/bin/edbg -t samr30 -pv -f /home/pi/$UpdateFile	
 	# end
-	echo -e "$(date -u) samr updated to $VERSION\n" >>/home/pi/sdu_guc_ssv/clients/sam-r30/sam-r30_fwUpdate_logfile.txt
+	echo -e "$(date -u) samr updated to $VERSION\n" >>FILEPATH/agent/samr30/assets/examples/sam-r30/logfile_samr30_fw-update.txt
 }
 
 case $1 in

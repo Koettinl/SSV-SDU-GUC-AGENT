@@ -5,7 +5,9 @@
 # this programm reads the input on specified pins to verify the updates installed on the sam r30
 
 # variables
-filePath="/home/pi/sdu_guc_ssv/products/sam-r30"
+FILEPATH="/home/pi/SSV-SDU-GUC-AGENT/agent/samr30/assets/examples/raspian"
+LOGFILE="logfile_samr30_fw-update.txt"
+
 # time and date for the logfile
 logString="$(date +"%Y-%m-%d %H:%M:%S")"
 # variables to see what firmware is used
@@ -39,7 +41,7 @@ then echo fwLedRed is installed!
     currentFw=fwLedRed
 # no firmware, write text into Logfile
 else logString+="	1 No Firmware detected[Pin Err], starting with fwLedGreen!" 
-    echo $logString #>> $filePath/sam-r30_fwUpdate_logfile.txt 
+    echo $logString #>> $FILEPATH/$LOGFILE
     currentFw="none"
 fi
 
@@ -47,18 +49,18 @@ fi
 if [ $currentFw != $fwLedGreen -a $previousFw != $currentFw -o $currentFw = "none" ]
 then logString+="	1 Set update to fwLedGreen"
 # write into Logfile
-    echo $logString >> $filePath/sam-r30_fwUpdate_logfile.txt
+    echo $logString >> $FILEPATH/$LOGFILE
     echo 1
     # call function to update firmware fwLedGreen
-    $filePath/3-set-current-version.sh fwLedGreen
+    $FILEPATH/3-set-current-version.sh fwLedGreen
     
 elif [ $currentFw != $fwLedRed -a $previousFw != $currentFw ]
 then logString+="	2 Set update to fwLedRed" 
-    echo $logString >> $filePath/sam-r30_fwUpdate_logfile.txt
+    echo $logString >> $FILEPATH/$LOGFILE
     echo 2
-    $filePath/3-set-current-version.sh fwLedRed
+    $FILEPATH/3-set-current-version.sh fwLedRed
 
 else logstring+="	3 Error occured, current firmware update is Current firmware, try again"
-    echo $logstring >> $filePath/sam-r30_fwUpdate_logfile.txt
+    echo $logstring >> $FILEPATH/$LOGFILE
     echo 3
 fi

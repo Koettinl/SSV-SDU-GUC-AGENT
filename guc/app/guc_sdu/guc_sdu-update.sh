@@ -7,7 +7,8 @@
 # - lines without "&&", "||", "while", "until", "!" (and maybe more?)
 set -eo pipefail
 shopt -s inherit_errexit
-FILEPATH=/home/pi
+FILEPATH=/home/pi/SSV-SDU-GUC-AGENT
+
 log () {
 	echo ":$1" >&2
 }
@@ -16,9 +17,10 @@ err () {
 	echo $1 >&2
 	exit 1
 }
+
 # Set environment
-chmod +x $FILEPATH/sdu_guc_ssv/clients/guc_sdu-update_environment.sh
-. $FILEPATH/sdu_guc_ssv/clients/guc_sdu-update_environment.sh
+chmod +x $FILEPATH/guc/app/guc_sdu/guc_sdu-update_environment.sh
+. $FILEPATH/guc/app/guc_sdu/guc_sdu-update_environment.sh
 
 # Check for environment variables
 [ -z "$SDU_SERVER_URL" ] && err "Environment SDU_SERVER_URL not set"

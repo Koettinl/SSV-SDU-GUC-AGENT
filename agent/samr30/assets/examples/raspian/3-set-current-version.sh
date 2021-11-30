@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # File path for key material
-FILEPATH=/home/pi/sdu_guc_ssv/key_material
+FILEPATH=/home/pi/SSV-SDU-GUC-AGENT/guc/assets/key_material
 set -e
 # get current version
 if [ $# -le 0 ]; then

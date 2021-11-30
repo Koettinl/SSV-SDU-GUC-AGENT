@@ -1,11 +1,11 @@
 #!/bin/bash
 
-Filepath=/home/pi/sdu_guc_ssv
+FILEPATH=/home/pi/SSV-SDU-GUC-AGENT
 
 # call updateclient for dummy agent
 #	[path to GUC | path to used agent]
-$Filepath/clients/guc_sdu-update.sh $Filepath/agents/agent_samr30_sdu-agent-samr30.sh
+$FILEPATH/guc/app/guc_sdu/guc_sdu-update.sh $FILEPATH/agent/samr30/agent_samr30_sdu-agent-samr30.sh
 
 # call read_Sam_R30.sh to create a logfile
 #	~/gpio_testing
-$Filepath/products/sam-r30/read_Sam_R30.sh
+$FILEPATH/agent/samr30/assets/examples/raspian/read_Sam_R30.sh
