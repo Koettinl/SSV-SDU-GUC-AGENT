@@ -8,6 +8,7 @@ Der GUC veranlasst zyklische Updates basierend auf Informationen über die aktue
 
 ### 1.1 Hardware Beispiel
 Für das beigefügte Beispiel wird der SAMR30 mit Jumperkabeln über die Pins PA06/07 an die Pins 23/24 des Rapsberry Pi angeschlossen. Des weiteren ist der Raspberry Pi mit dem EDBG-USB des SAMR30 zu verbinden.
+Im [`Ordner`](https://github.com/Koettinl/SSV-SDU-GUC-AGENT/tree/as-sdu-v2/agent/samr30/assets/examples/sam-r30/bin) befinden sich zwei .bin Dateien als Firmware zum Test des Updatezyklus. Jede Firmware lässt jeweils eine andere LED leuchten, sodass optisch geprüft werden kann, ob ein Update erfolgreich abgeschlossen wurde.
 
 ### 1.2 Software Beispiel
 Zur Installation auf einem Raspberry Pi mit Raspbian OS ist lediglich das Kopieren der Dateien mit gegebener Ordnerstruktur notwendig. Um den Ordner und darin enthaltene Skripte ausführbar zu machen, wird folgendes in die Komandozeile eingegeben: `chmod -R 500 path/to/folder/`.
