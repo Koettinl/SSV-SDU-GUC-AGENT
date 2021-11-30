@@ -10,8 +10,9 @@ Der GUC veranlasst zyklische Updates basierend auf Informationen über die aktue
 Für das beigefügte Beispiel wird der SAMR30 mit Jumperkabeln über die Pins PA06/07 an die Pins 23/24 des Rapsberry Pi angeschlossen. Des weiteren ist der Raspberry Pi mit dem EDBG-USB des SAMR30 zu verbinden.
 
 ### 1.2 Software Beispiel
-Zur Installation auf einem Raspberry Pi mit Raspbian OS ist lediglich das Kopieren der Dateien mit gegebener Ordnerstruktur notwendig. Zur Ausführung eines Updates wird das [`sdu-guc-update.sh`](https://github.com/Koettinl/SSV-SDU-GUC-AGENT/blob/main/clients/guc_sdu-update.sh) Skript ausgeführt.
-Bei bedarf kann über Systemd ein zyklischer Aufruf realisiert werden.
+Zur Installation auf einem Raspberry Pi mit Raspbian OS ist lediglich das Kopieren der Dateien mit gegebener Ordnerstruktur notwendig. Um den Ordner und darin enthaltene Skripte ausführbar zu machen, wird folgendes in die Komandozeile eingegeben: `chmod -R 500 path/to/folder/`.
+Zur Ausführung eines Updates wird dann das [`sdu-guc-update.sh`](https://github.com/Koettinl/SSV-SDU-GUC-AGENT/blob/main/clients/guc_sdu-update.sh) Skript ausgeführt.
+Bei Bedarf kann über Systemd ein zyklischer Aufruf realisiert werden.
 
 ![Architektur Guc](https://user-images.githubusercontent.com/59482387/132204706-ce3661f2-0328-4731-bce8-013f67b2ba7d.PNG)
 
