@@ -4,7 +4,7 @@ Tutorail für den Aufbau eines Agenten für ein gegebenes GUC-SDU
 ## **1 Achitektur**
 Ein SDU Server stellt Firmwareupdates für einen GUC und dieser verwaltet zugehörige Agenten für die gewünschten Produkte.
 Der Code des GUC und des Agenten befinden sich auf einem [Raspberry Pi 4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) und das Produkt liegt hier in Form eines [Sam R30](http://ww1.microchip.com/downloads/en/devicedoc/50002612a.pdf) vor.
-Der GUC veranlasst zyklische Updates basierend auf Informationen über die aktuelle Firmware des Produktes. Dafür werden `systemd` funktionen genutzt. Das Update wird vom SDU Server bezogen und über den GUC zur Installation auf dem Produkt überprüft und bereitgestellt. Anschließend erfolgt die Installation der neuen Firmware anhand des Agenten auf dem angeschlossenen Produkt.
+Der GUC veranlasst zyklische Updates basierend auf Informationen über die aktuelle Firmware des Produktes. Für den zyklischen Aufruf werden `systemd` funktionen genutzt. Das Update wird vom SDU Server bezogen und über den GUC zur Installation auf dem Produkt überprüft und bereitgestellt. Anschließend erfolgt die Installation der neuen Firmware auf dem angeschlossenen Produkt anhand des Agenten.
 
 ![Architektur Guc](https://user-images.githubusercontent.com/59482387/132204706-ce3661f2-0328-4731-bce8-013f67b2ba7d.PNG)
 
@@ -16,7 +16,7 @@ Der GUC veranlasst zyklische Updates basierend auf Informationen über die aktue
 
 ### **1.1 Hardware Beispiel**
 Für das beigefügte Beispiel wird der SAMR30 mit Jumperkabeln über die Pins PA06/07 an die Pins 23/24 des Rapsberry Pi angeschlossen. Des weiteren ist der Raspberry Pi mit dem EDBG-USB des SAMR30 zu verbinden.
-Im [`Ordner`](https://github.com/Koettinl/SSV-SDU-GUC-AGENT/tree/as-sdu-v2/agent/samr30/assets/examples/sam-r30/bin) befinden sich zwei .bin Dateien als Firmware zum Test des Updatezyklus. Jede Firmware lässt jeweils eine andere LED leuchten, sodass optisch geprüft werden kann, ob ein Update erfolgreich abgeschlossen wurde.
+Im [`Ordner`](https://github.com/Koettinl/SSV-SDU-GUC-AGENT/tree/as-sdu-v2/agent/samr30/assets/examples/sam-r30/bin) befinden sich zwei .bin Dateien als Firmware zum Test eines Updatezyklus. Jede Firmware lässt jeweils eine andere LED leuchten, sodass optisch geprüft werden kann, ob ein Update erfolgreich abgeschlossen wurde.
 
 ### **1.2 Software Beispiel**
 Dieses Softwarebeispiel funktioniert auf einem Raspberry Pi mit Raspian os und dem default Benutzer *Pi*. Wenn ein anderer Benutzer verwendet wird, müssen alle `$FILEPATH` mit dem entsprechenden Benutzer angepasst werden.
@@ -35,6 +35,7 @@ cd SSV-SDU-GUC-AGENT
 # make all scripts executable within the folder
 find . -type f -name *.sh -exec chmod 0775 {} \;
 ```
+Folgend wird [`edbg`](https://github.com/ataradov/edbg), ein Linux-Tool zum flashen des Sam R30 xplained pro, installiert.
 ```bash
 # install all necessary dependencies for edbg
 sudo apt-get install git build-essential libudev-dev
@@ -59,7 +60,7 @@ cp edbg /home/pi/bin/edbg
 
 ## **2 SDU Agent**
 
-SDU-Agent ist ein speziell für den jeweiligen Updateprozess, eine Komponente/Maschine/Anlage, erstelltes Programm. Der Agent wird im Gateway vom [GUC](sdu-guc.md) (Gateway Update Client) ausgeführt/bedient und bietet dazu eine spezielle Schnittstelle (ADU-Agent API). Es können mehrere Agenten im System installiert werden.
+SDU-Agent ist ein speziell für den jeweiligen Updateprozess, eine Komponente/Maschine/Anlage, erstelltes Programm. Der Agent wird im Gateway vom GUC (Gateway Update Client) ausgeführt/bedient und bietet dazu eine spezielle Schnittstelle (ADU-Agent API). Es können mehrere Agenten im System installiert werden.
 
 ### **2.1 SDU-Agent API**
 Ein SDU-Agent hat folgende Aufgaben:
@@ -107,10 +108,9 @@ Die Abfrage erlaubt dem SDU-Gateway-Update-Client ein neues Update zu installier
    - 3: RejectWrongSHA256
 
 
-## 3 Schnittstelle Agent zu Mikrocontroller
-* [`edbg`](https://github.com/ataradov/edbg) Linux-Tool zum flashen des Sam R30 xplained pro
+## 3 edbg als Schnittstelle von Agent zu Mikrocontroller 
 
-### Flashen einer neuen Firmware
+### 3.1 Flashen einer neuen Firmware
 
 * **Aufruf**: `path/to/edbg [options]`
   - `[options]`: Verkettung von Target und [Optionen](https://github.com/ataradov/edbg#usage) zum bearbeiten des Chips und verarbeiten von .bin Dateien.
